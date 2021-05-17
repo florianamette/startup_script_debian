@@ -1,0 +1,29 @@
+---
+name: Run shell-linter
+on:
+  - push
+  - pull_request
+jobs:
+  shellfmt:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      - name: Run the sh-checker
+        uses: luizm/action-sh-checker@v0.1.12
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Optional if sh_checker_comment is false.
+          SHFMT_OPTS: -l -i 4 -w # Optional: pass arguments to shfmt.
+        with:
+          sh_checker_shellcheck_disable: true
+          sh_checker_comment: true
+          sh_checker_exclude: |
+                              src/
+                              debian/postrm
+  shellcheck:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      - name: Run shellcheck
+        run: ./shellcheck/docker_build_and_run_shellcheck.sh
