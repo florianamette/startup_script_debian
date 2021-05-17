@@ -2,6 +2,6 @@
 
 ```
 chmod 744 startup.sh
-bash startup.sh
+sudo bash startup.sh
 
 ```
